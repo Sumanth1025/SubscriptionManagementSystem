@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Usage{% endblock %}
+
+{% block content %}
+
+<h1>Edit Usage</h1>
+
+<form method="POST">
+
+    <div class="form-group">
+
+        <label>Usage Date</label>
+
+        <input
+            type="date"
+            name="usage_date"
+            value="{{ usage_detail[2] }}"
+            required
+        >
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label>Usage Amount</label>
+
+        <input
+            type="number"
+            name="usage_amount"
+            value="{{ usage_detail[3] }}"
+            min="0"
+            required
+        >
+
+    </div>
+
+
+    <button type="submit" class="btn">
+        Update Usage
+    </button>
+
+    <a href="/usage" class="cancel-btn">
+        Cancel
+    </a>
+
+</form>
+
+{% endblock %}

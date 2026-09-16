@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Subscriptions{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <h1>Subscriptions</h1>
+
+    <a href="/add-subscription" class="btn">
+        + Create Subscription
+    </a>
+
+</div>
+
+<table>
+
+    <thead>
+
+        <tr>
+            <th>Subscription ID</th>
+            <th>Customer</th>
+            <th>Plan</th>
+            <th>Price</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+        {% for subscription in subscriptions %}
+
+        <tr>
+
+            <td>{{ subscription[0] }}</td>
+            <td>{{ subscription[1] }}</td>
+            <td>{{ subscription[2] }}</td>
+            <td>₹{{ subscription[3] }}</td>
+            <td>{{ subscription[4] }}</td>
+            <td>{{ subscription[5] }}</td>
+            <td>{{ subscription[6] }}</td>
+
+            <td>
+
+                <a
+                    href="/edit-subscription/{{ subscription[0] }}"
+                    class="btn"
+                >
+                    Edit
+                </a>
+
+                <a
+                    href="/delete-subscription/{{ subscription[0] }}"
+                    class="delete-btn"
+                    onclick="return confirm('Are you sure you want to delete this subscription and its related payment and usage records?')"
+                >
+                    Delete
+                </a>
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% endblock %}

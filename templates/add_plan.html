@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}Add Plan{% endblock %}
+
+{% block content %}
+
+<h1>Add Plan</h1>
+
+<form method="POST" action="/add-plan">
+
+    <div class="form-group">
+
+        <label>Plan Name</label>
+
+        <input
+            type="text"
+            name="plan_name"
+            placeholder="Enter plan name"
+            required
+        >
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label>Price</label>
+
+        <input
+            type="number"
+            name="price"
+            step="0.01"
+            placeholder="Enter price"
+            required
+        >
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label>Duration (Months)</label>
+
+        <input
+            type="number"
+            name="duration_months"
+            min="1"
+            placeholder="Enter duration"
+            required
+        >
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label>Description</label>
+
+        <input
+            type="text"
+            name="description"
+            placeholder="Enter plan description"
+        >
+
+    </div>
+
+
+    <button type="submit" class="btn">
+        Add Plan
+    </button>
+
+    <a href="/plans" class="cancel-btn">
+        Cancel
+    </a>
+
+</form>
+
+{% endblock %}

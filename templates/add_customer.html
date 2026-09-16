@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}Add Customer{% endblock %}
+
+{% block content %}
+
+<h1>Add Customer</h1>
+
+<form method="POST" action="/add-customer">
+
+    <div class="form-group">
+
+        <label>Name</label>
+
+        <input
+            type="text"
+            name="name"
+            placeholder="Enter customer name"
+            required
+        >
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label>Email</label>
+
+        <input
+            type="email"
+            name="email"
+            placeholder="Enter email"
+            required
+        >
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label>Phone</label>
+
+        <input
+            type="text"
+            name="phone"
+            placeholder="Enter phone number"
+            required
+        >
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label>Registration Date</label>
+
+        <input
+            type="date"
+            name="registration_date"
+            required
+        >
+
+    </div>
+
+
+    <button type="submit" class="btn">
+        Add Customer
+    </button>
+
+    <a href="/customers" class="cancel-btn">
+        Cancel
+    </a>
+
+</form>
+
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Plans{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <h1>Plans</h1>
+
+    <a href="/add-plan" class="btn">
+        + Add Plan
+    </a>
+
+</div>
+
+<table>
+
+    <thead>
+
+        <tr>
+            <th>Plan ID</th>
+            <th>Plan Name</th>
+            <th>Price</th>
+            <th>Duration</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+        {% for plan in plans %}
+
+        <tr>
+
+            <td>{{ plan[0] }}</td>
+
+            <td>{{ plan[1] }}</td>
+
+            <td>₹{{ plan[2] }}</td>
+
+            <td>{{ plan[3] }} month(s)</td>
+
+            <td>{{ plan[4] }}</td>
+
+            <td>
+
+                <a
+                    href="/edit-plan/{{ plan[0] }}"
+                    class="btn"
+                >
+                    Edit
+                </a>
+
+                <a
+                    href="/delete-plan/{{ plan[0] }}"
+                    class="delete-btn"
+                    onclick="return confirm('Are you sure you want to delete this plan?')"
+                >
+                    Delete
+                </a>
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+{% endblock %}

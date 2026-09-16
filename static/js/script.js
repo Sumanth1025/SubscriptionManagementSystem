@@ -1,0 +1,1 @@
+console.log("Subscription Management System loaded");

@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}Add Payment{% endblock %}
+
+{% block content %}
+
+<h1>Add Payment</h1>
+
+<form method="POST" action="/add-payment">
+
+    <div class="form-group">
+
+        <label>Subscription</label>
+
+        <select name="subscription_id" required>
+
+            <option value="">Select Subscription</option>
+
+            {% for subscription in subscriptions %}
+
+            <option value="{{ subscription[0] }}">
+                #{{ subscription[0] }} - {{ subscription[1] }} - {{ subscription[2] }}
+            </option>
+
+            {% endfor %}
+
+        </select>
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label>Amount</label>
+
+        <input
+            type="number"
+            name="amount"
+            step="0.01"
+            placeholder="Enter amount"
+            required
+        >
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label>Payment Date</label>
+
+        <input
+            type="date"
+            name="payment_date"
+            required
+        >
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label>Payment Method</label>
+
+        <select name="payment_method" required>
+
+            <option value="">Select Payment Method</option>
+            <option value="UPI">UPI</option>
+            <option value="Credit Card">Credit Card</option>
+            <option value="Debit Card">Debit Card</option>
+            <option value="Net Banking">Net Banking</option>
+            <option value="Cash">Cash</option>
+
+        </select>
+
+    </div>
+
+
+    <div class="form-group">
+
+        <label>Status</label>
+
+        <select name="status" required>
+
+            <option value="completed">Completed</option>
+            <option value="pending">Pending</option>
+            <option value="failed">Failed</option>
+
+        </select>
+
+    </div>
+
+
+    <button type="submit" class="btn">
+        Add Payment
+    </button>
+
+    <a href="/payments" class="cancel-btn">
+        Cancel
+    </a>
+
+</form>
+
+{% endblock %}
