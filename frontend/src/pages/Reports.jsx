@@ -179,7 +179,7 @@ if (loading) {
               type="monotone"
               dataKey="revenue"
               name="Revenue"
-              stroke="#e50914"
+              stroke="#3B82F6"
               strokeWidth={3}
               dot={{ r: 5 }}
               activeDot={{ r: 7 }}
@@ -221,7 +221,7 @@ if (loading) {
             <Bar
               dataKey="revenue"
               name="Revenue"
-              fill="#e50914"
+              fill="#3B82F6"
               radius={[6, 6, 0, 0]}
             />
 
@@ -249,13 +249,13 @@ if (loading) {
 
               <stop
                 offset="5%"
-                stopColor="#e50914"
+                stopColor="#3B82F6"
                 stopOpacity={0.35}
               />
 
               <stop
                 offset="95%"
-                stopColor="#e50914"
+                stopColor="#3B82F6"
                 stopOpacity={0}
               />
 
@@ -287,7 +287,7 @@ if (loading) {
             type="monotone"
             dataKey="revenue"
             name="Revenue"
-            stroke="#e50914"
+            stroke="#3B82F6"
             strokeWidth={3}
             fill="url(#revenueGradient)"
           />
@@ -367,22 +367,22 @@ if (loading) {
           dataKey="active"
           name="Active"
           stackId="subscription"
-          fill="#e50914"
+          fill="#3B82F6"
         />
 
-        <Bar
-          dataKey="cancelled"
-          name="Cancelled"
-          stackId="subscription"
-          fill="#555"
-        />
+<Bar
+  dataKey="cancelled"
+  name="Cancelled"
+  stackId="subscription"
+  fill="#60A5FA"
+/>
 
-        <Bar
-          dataKey="expired"
-          name="Expired"
-          stackId="subscription"
-          fill="#888"
-        />
+<Bar
+  dataKey="expired"
+  name="Expired"
+  stackId="subscription"
+  fill="#93C5FD"
+/>
 
       </BarChart>
 
@@ -413,16 +413,16 @@ if (loading) {
               {reports.churn_analysis.map(
                 (entry, index) => (
 
-                  <Cell
-                    key={`churn-${index}`}
-                   fill={
-  entry.status === "active"
-    ? "#e50914"
-    : entry.status === "cancelled"
-    ? "#555"
-    : "#888"
-}
-                  />
+<Cell
+  key={`churn-${index}`}
+  fill={
+    entry.status === "active"
+      ? "#3B82F6"
+      : entry.status === "cancelled"
+      ? "#60A5FA"
+      : "#93C5FD"
+  }
+/>
 
                 )
               )}
@@ -459,16 +459,16 @@ if (loading) {
             {reports.churn_analysis.map(
               (entry, index) => (
 
-                <Cell
-                  key={`churn-${index}`}
-                  fill={
-  entry.status === "active"
-    ? "#e50914"
-    : entry.status === "cancelled"
-    ? "#555"
-    : "#888"
-}
-                />
+<Cell
+  key={`churn-${index}`}
+  fill={
+    entry.status === "active"
+      ? "#3B82F6"
+      : entry.status === "cancelled"
+      ? "#60A5FA"
+      : "#93C5FD"
+  }
+/>
 
               )
             )}
@@ -517,11 +517,11 @@ if (loading) {
                     key={`popular-${index}`}
                     fill={
                       [
-                        "#e50914",
-                        "#b20710",
-                        "#831010",
-                        "#5f0b0b",
-                        "#3a0808"
+                        "#3B82F6",
+                        "#2563EB",
+                        "#60A5FA",
+                        "#1D4ED8",
+                        "#93C5FD"
                       ][index]
                     }
                   />
@@ -577,7 +577,7 @@ if (loading) {
           <Bar
             dataKey="subscription_count"
             name="Subscriptions"
-            fill="#e50914"
+            fill="#3B82F6"
             radius={[0, 6, 6, 0]}
           />
 
@@ -625,11 +625,11 @@ const renderSpendingChart = () => {
                 key={`spending-${index}`}
                 fill={
                   [
-                    "#e50914",
-                    "#b20710",
-                    "#831010",
-                    "#5f0b0b",
-                    "#3a0808"
+                    "#3B82F6",
+                    "#2563EB",
+                    "#60A5FA",
+                    "#1D4ED8",
+                    "#93C5FD"
                   ][index % 5]
                 }
               />
@@ -693,7 +693,7 @@ const renderSpendingChart = () => {
         <Bar
           dataKey="total_spending"
           name="Total Spending"
-          fill="#e50914"
+          fill="#3B82F6"
           radius={[0, 6, 6, 0]}
         />
 
@@ -709,11 +709,10 @@ const renderSpendingChart = () => {
 
   const renderPaymentMethodChart = () => {
 
-    const paymentData =
-      (reports.payment_method_distribution || []).map((item) => ({
-        ...item,
-        payment_count: Number(item.payment_count) || 0
-    }));
+   const paymentData = (reports.payment_method_distribution || []).map((item) => ({
+  payment_method: String(item.payment_method || "Unknown"),
+  payment_count: Number(item.payment_count || 0)
+}));
 
 
   if (chartTypes.paymentMethods === "doughnut") {
@@ -740,11 +739,11 @@ const renderSpendingChart = () => {
                 key={`payment-${index}`}
                 fill={
                   [
-                    "#e50914",
-                    "#b20710",
-                    "#831010",
-                    "#5f0b0b",
-                    "#3a0808"
+                    "#3B82F6",
+                    "#2563EB",
+                    "#60A5FA",
+                    "#1D4ED8",
+                    "#93C5FD"
                   ][index % 5]
                 }
               />
@@ -793,11 +792,12 @@ const renderSpendingChart = () => {
         <Tooltip contentStyle={tooltipStyle} />
 
         <Bar
-          dataKey="payment_count"
-          name="Payments"
-          fill="#e50914"
-          radius={[6, 6, 0, 0]}
-        />
+  dataKey="payment_count"
+  name="Payments"
+  fill="#3B82F6"
+  radius={[6, 6, 0, 0]}
+  isAnimationActive={false}
+/>
 
       </BarChart>
 

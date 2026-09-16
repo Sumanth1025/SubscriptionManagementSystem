@@ -52,7 +52,7 @@ input {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #e50914;
+  background: #3B82F6;
   font-size: 20px;
 }
 
@@ -79,7 +79,7 @@ input {
 }
 
 .nav-item.active {
-  background: #e50914;
+  background: #3B82F6;
   color: white;
 }
 
@@ -205,14 +205,14 @@ input {
   width: 400px;
   height: 400px;
   border-radius: 50%;
-  background: #e50914;
+  background: #3B82F6;
   opacity: 0.08;
   right: -100px;
   top: -100px;
 }
 
 .hero-label {
-  color: #e50914;
+  color: #3B82F6;
   font-size: 12px;
   letter-spacing: 2px;
   font-weight: bold;
@@ -237,7 +237,7 @@ input {
 }
 
 .primary-button {
-  background: #e50914;
+  background: #3B82F6;
   color: white;
   border: none;
   padding: 12px 22px;
@@ -306,7 +306,7 @@ input {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #e50914;
+  color: #3B82F6;
 }
 
 .stat-card h2 {
@@ -411,7 +411,7 @@ input {
 
 .progress-fill {
   height: 100%;
-  background: #e50914;
+  background: #3B82F6;
   border-radius: 20px;
 }
 
@@ -490,7 +490,7 @@ input {
 }
 
 .error-screen p {
-  color: #e50914;
+  color: #3B82F6;
   margin-top: 10px;
 }
 
@@ -536,7 +536,7 @@ input {
 
 .revenue-fill {
   height: 100%;
-  background: #e50914;
+  background: #3B82F6;
   border-radius: 20px;
 }
 
@@ -829,7 +829,7 @@ input {
 
 .delete-button {
   background: #301515;
-  color: #e50914;
+  color: #3B82F6;
 }
 
 .edit-button:hover {
@@ -1007,11 +1007,11 @@ input {
 
 .delete-btn {
   background: rgba(229, 9, 20, 0.15);
-  color: #e50914;
+  color: #3B82F6;
 }
 
 .delete-btn:hover {
-  background: #e50914;
+  background: #3B82F6;
   color: #ffffff;
 }
 /* usage page alignment */
@@ -1052,7 +1052,7 @@ input {
   padding: 15px 22px;
   border: none;
   border-radius: 9px;
-  background: #e50914;
+  background: #3B82F6;
   color: white;
   font-size: 16px;
   font-weight: 600;
@@ -1193,11 +1193,11 @@ input {
 
 .usage-page .delete-btn {
   background: rgba(229, 9, 20, 0.15);
-  color: #e50914;
+  color: #3B82F6;
 }
 
 .usage-page .delete-btn:hover {
-  background: #e50914;
+  background: #3B82F6;
   color: white;
 }
 /* discounts page */
@@ -1234,7 +1234,7 @@ input {
   padding: 15px 22px;
   border: none;
   border-radius: 9px;
-  background: #e50914;
+  background: #3B82F6;
   color: white;
   font-size: 16px;
   font-weight: 600;
@@ -1364,11 +1364,11 @@ input {
 
 .discounts-page .delete-btn {
   background: rgba(229, 9, 20, 0.15);
-  color: #e50914;
+  color: #3B82F6;
 }
 
 .discounts-page .delete-btn:hover {
-  background: #e50914;
+  background: #3B82F6;
   color: white;
 }
 /* =========================================
@@ -1565,7 +1565,7 @@ input {
   border-radius: 12px;
 
   background: rgba(229, 9, 20, 0.14);
-  color: #e50914;
+  color: #3B82F6;
 }
 
 .kpi-card p {
@@ -1659,7 +1659,7 @@ input {
 
   background: rgba(229, 9, 20, 0.13);
 
-  color: #e50914;
+  color: #3B82F6;
 }
 
 .report-heading-content {
@@ -1731,7 +1731,7 @@ input {
 }
 
 .chart-selector:focus {
-  border-color: #e50914;
+  border-color: #3B82F6;
 }
 
 .chart-selector option {
@@ -1787,7 +1787,7 @@ input {
 }
 
 .error-state p {
-  color: #e50914;
+  color: #3B82F6;
 }
 
 
@@ -1934,7 +1934,7 @@ input {
 
   padding: 12px 24px;
 
-  background: #e50914;
+  background: #3B82F6;
   color: #ffffff;
 
   border: none;
