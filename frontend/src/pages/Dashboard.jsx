@@ -11,13 +11,14 @@ import StatCard from "../components/StatCard";
 
 function Dashboard() {
 
+  const API_URL = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
   const [dashboard, setDashboard] = useState(null);
   const [error, setError] = useState("");
 
   useEffect(() => {
 
-    fetch("http://127.0.0.1:5000/api/dashboard")
+    fetch(`${API_URL}/api/dashboard`)
       .then((response) => {
 
         if (!response.ok) {

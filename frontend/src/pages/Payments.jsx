@@ -8,6 +8,7 @@ import {
 
 function Payments() {
 
+  const API_URL = import.meta.env.VITE_API_URL;
   const [payments, setPayments] = useState([]);
   const [subscriptions, setSubscriptions] = useState([]);
 
@@ -26,7 +27,7 @@ function Payments() {
 
   const loadPayments = () => {
 
-    fetch("http://127.0.0.1:5000/api/payments")
+    fetch(`${API_URL}/api/payments`)
       .then((response) => response.json())
       .then((data) => {
         setPayments(data);
@@ -40,7 +41,7 @@ function Payments() {
 
   const loadSubscriptions = () => {
 
-    fetch("http://127.0.0.1:5000/api/payment-subscriptions")
+    fetch(`${API_URL}/api/payment-subscriptions`)
       .then((response) => response.json())
       .then((data) => {
         setSubscriptions(data);
@@ -111,8 +112,8 @@ function Payments() {
     event.preventDefault();
 
     const url = editingPayment
-      ? `http://127.0.0.1:5000/api/payments/${editingPayment.payment_id}`
-      : "http://127.0.0.1:5000/api/payments";
+  ? `${API_URL}/api/payments/${editingPayment.payment_id}`
+  : `${API_URL}/api/payments`;
 
     const method = editingPayment ? "PUT" : "POST";
 
@@ -162,7 +163,7 @@ function Payments() {
     try {
 
       const response = await fetch(
-        `http://127.0.0.1:5000/api/payments/${paymentId}`,
+        `${API_URL}/api/payments/${paymentId}`,
         {
           method: "DELETE"
         }

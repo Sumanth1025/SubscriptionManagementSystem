@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Plus, Search, Pencil, Trash2, X } from "lucide-react";
 
 function Usage() {
+  const API_URL = import.meta.env.VITE_API_URL;
   const [usage, setUsage] = useState([]);
   const [subscriptions, setSubscriptions] = useState([]);
 
@@ -16,14 +17,14 @@ function Usage() {
   });
 
   const loadUsage = async () => {
-    const response = await fetch("http://127.0.0.1:5000/api/usage");
+    const response = await fetch(`${API_URL}/api/usage`);
     const data = await response.json();
     setUsage(data);
   };
 
   const loadSubscriptions = async () => {
     const response = await fetch(
-      "http://127.0.0.1:5000/api/usage-subscriptions"
+      `${API_URL}/api/usage-subscriptions`
     );
 
     const data = await response.json();
@@ -74,9 +75,9 @@ function Usage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const url = editingUsage
-      ? `http://127.0.0.1:5000/api/usage/${editingUsage.usage_id}`
-      : "http://127.0.0.1:5000/api/usage";
+   const url = editingUsage
+  ? `${API_URL}/api/usage/${editingUsage.usage_id}`
+  : `${API_URL}/api/usage`;
 
     const method = editingUsage ? "PUT" : "POST";
 
@@ -106,7 +107,7 @@ function Usage() {
     }
 
     await fetch(
-      `http://127.0.0.1:5000/api/usage/${usageId}`,
+      `${API_URL}/api/usage/${usageId}`,
       {
         method: "DELETE"
       }

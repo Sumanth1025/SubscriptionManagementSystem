@@ -31,6 +31,7 @@ import {
 
 function Reports() {
 
+  const API_URL = import.meta.env.VITE_API_URL;
   const [reports, setReports] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -56,8 +57,8 @@ function Reports() {
     try {
 
       const response = await fetch(
-        "http://127.0.0.1:5000/api/reports"
-      );
+  `${API_URL}/api/reports`
+);
 
       if (!response.ok) {
         throw new Error("Failed to load reports");

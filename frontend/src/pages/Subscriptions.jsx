@@ -8,6 +8,7 @@ import {
 
 function Subscriptions() {
 
+  const API_URL = import.meta.env.VITE_API_URL;
   const [subscriptions, setSubscriptions] = useState([]);
   const [customers, setCustomers] = useState([]);
   const [plans, setPlans] = useState([]);
@@ -31,7 +32,7 @@ function Subscriptions() {
 
   const loadSubscriptions = () => {
 
-    fetch("http://127.0.0.1:5000/api/subscriptions")
+    fetch(`${API_URL}/api/subscriptions`)
       .then((response) => response.json())
       .then((data) => {
         setSubscriptions(data);
@@ -47,7 +48,7 @@ function Subscriptions() {
 
   const loadCustomers = () => {
 
-    fetch("http://127.0.0.1:5000/api/subscription-customers")
+    fetch(`${API_URL}/api/subscription-customers`)
       .then((response) => response.json())
       .then((data) => {
         setCustomers(data);
@@ -63,7 +64,7 @@ function Subscriptions() {
 
   const loadPlans = () => {
 
-    fetch("http://127.0.0.1:5000/api/subscription-plans")
+    fetch(`${API_URL}/api/subscription-plans`)
       .then((response) => response.json())
       .then((data) => {
         setPlans(data);
@@ -143,8 +144,8 @@ function Subscriptions() {
     event.preventDefault();
 
     const url = editingSubscription
-      ? `http://127.0.0.1:5000/api/subscriptions/${editingSubscription.subscription_id}`
-      : "http://127.0.0.1:5000/api/subscriptions";
+  ? `${API_URL}/api/subscriptions/${editingSubscription.subscription_id}`
+  : `${API_URL}/api/subscriptions`;
 
     const method = editingSubscription
       ? "PUT"
@@ -212,13 +213,12 @@ function Subscriptions() {
 
     try {
 
-      const response = await fetch(
-        `http://127.0.0.1:5000/api/subscriptions/${subscriptionId}`,
-        {
-          method: "DELETE"
-        }
-      );
-
+     const response = await fetch(
+    `${API_URL}/api/subscriptions/${subscriptionId}`,
+    {
+        method: "DELETE"
+    }
+);
 
       const result = await response.json();
 

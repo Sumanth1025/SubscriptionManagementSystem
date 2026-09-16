@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Plus, Search, Pencil, Trash2, X } from "lucide-react";
 
 function Discounts() {
+  const API_URL = import.meta.env.VITE_API_URL;
   const [discounts, setDiscounts] = useState([]);
   const [plans, setPlans] = useState([]);
 
@@ -18,7 +19,7 @@ function Discounts() {
 
   const loadDiscounts = async () => {
     const response = await fetch(
-      "http://127.0.0.1:5000/api/discounts"
+      `${API_URL}/api/discounts`
     );
 
     const data = await response.json();
@@ -28,7 +29,7 @@ function Discounts() {
 
   const loadPlans = async () => {
     const response = await fetch(
-      "http://127.0.0.1:5000/api/discount-plans"
+      `${API_URL}/api/discount-plans`
     );
 
     const data = await response.json();
@@ -83,9 +84,8 @@ function Discounts() {
     e.preventDefault();
 
     const url = editingDiscount
-      ? `http://127.0.0.1:5000/api/discounts/${editingDiscount.discount_id}`
-      : "http://127.0.0.1:5000/api/discounts";
-
+  ? `${API_URL}/api/discounts/${editingDiscount.discount_id}`
+  : `${API_URL}/api/discounts`;
     const method = editingDiscount ? "PUT" : "POST";
 
     await fetch(url, {
@@ -116,7 +116,7 @@ function Discounts() {
     }
 
     await fetch(
-      `http://127.0.0.1:5000/api/discounts/${discountId}`,
+      `${API_URL}/api/discounts/${discountId}`,
       {
         method: "DELETE"
       }

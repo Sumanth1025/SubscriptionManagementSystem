@@ -3,6 +3,7 @@ import { Plus, Pencil, Trash2, Search } from "lucide-react";
 
 function Plans() {
 
+  const API_URL = import.meta.env.VITE_API_URL;
   const [plans, setPlans] = useState([]);
   const [search, setSearch] = useState("");
   const [showForm, setShowForm] = useState(false);
@@ -18,7 +19,7 @@ function Plans() {
 
   const loadPlans = () => {
 
-    fetch("http://127.0.0.1:5000/api/plans")
+    fetch(`${API_URL}/api/plans`)
       .then((response) => response.json())
       .then((data) => {
         setPlans(data);
@@ -82,8 +83,8 @@ function Plans() {
     event.preventDefault();
 
     const url = editingPlan
-      ? `http://127.0.0.1:5000/api/plans/${editingPlan.plan_id}`
-      : "http://127.0.0.1:5000/api/plans";
+  ? `${API_URL}/api/plans/${editingPlan.plan_id}`
+  : `${API_URL}/api/plans`;
 
     const method = editingPlan ? "PUT" : "POST";
 
@@ -129,7 +130,7 @@ function Plans() {
     try {
 
       const response = await fetch(
-        `http://127.0.0.1:5000/api/plans/${planId}`,
+        `${API_URL}/api/plans/${planId}`,
         {
           method: "DELETE"
         }

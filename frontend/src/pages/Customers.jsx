@@ -3,6 +3,7 @@ import { Plus, Pencil, Trash2, Search } from "lucide-react";
 
 function Customers() {
 
+  const API_URL = import.meta.env.VITE_API_URL;
   const [customers, setCustomers] = useState([]);
   const [search, setSearch] = useState("");
   const [showForm, setShowForm] = useState(false);
@@ -17,7 +18,7 @@ function Customers() {
 
   const loadCustomers = () => {
 
-    fetch("http://127.0.0.1:5000/api/customers")
+    fetch(`${API_URL}/api/customers`)
       .then((response) => response.json())
       .then((data) => {
         setCustomers(data);
@@ -82,8 +83,8 @@ function Customers() {
     event.preventDefault();
 
     const url = editingCustomer
-      ? `http://127.0.0.1:5000/api/customers/${editingCustomer.customer_id}`
-      : "http://127.0.0.1:5000/api/customers";
+        ? `${API_URL}/api/customers/${editingCustomer.customer_id}`
+        : `${API_URL}/api/customers`;
 
     const method = editingCustomer ? "PUT" : "POST";
 
@@ -128,7 +129,7 @@ function Customers() {
     try {
 
       const response = await fetch(
-        `http://127.0.0.1:5000/api/customers/${customerId}`,
+        `${API_URL}/api/customers/${customerId}`,
         {
           method: "DELETE"
         }
