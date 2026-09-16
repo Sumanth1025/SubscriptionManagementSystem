@@ -10,6 +10,7 @@ function Payments() {
 
   const API_URL = import.meta.env.VITE_API_URL;
   const [payments, setPayments] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [subscriptions, setSubscriptions] = useState([]);
 
   const [search, setSearch] = useState("");
@@ -27,7 +28,7 @@ function Payments() {
 
   const loadPayments = () => {
 
-    fetch(`${API_URL}/api/payments`)
+    return fetch(`${API_URL}/api/payments`)
       .then((response) => response.json())
       .then((data) => {
         setPayments(data);
@@ -41,7 +42,7 @@ function Payments() {
 
   const loadSubscriptions = () => {
 
-    fetch(`${API_URL}/api/payment-subscriptions`)
+    return fetch(`${API_URL}/api/payment-subscriptions`)
       .then((response) => response.json())
       .then((data) => {
         setSubscriptions(data);
@@ -53,12 +54,12 @@ function Payments() {
   };
 
 
-  useEffect(() => {
-
-    loadPayments();
-    loadSubscriptions();
-
-  }, []);
+ useEffect(() => {
+    Promise.all([
+        loadPayments(),
+        loadSubscriptions()
+    ]).finally(() => setLoading(false));
+}, []);
 
 
   const handleChange = (event) => {
@@ -198,7 +199,13 @@ function Payments() {
 
   });
 
-
+if (loading) {
+    return (
+        <div className="loading-screen">
+            <h2>Loading payments...</h2>
+        </div>
+    );
+}
   return (
 
     <div className="customers-page">

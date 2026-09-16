@@ -5,6 +5,7 @@ function Plans() {
 
   const API_URL = import.meta.env.VITE_API_URL;
   const [plans, setPlans] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [editingPlan, setEditingPlan] = useState(null);
@@ -19,21 +20,23 @@ function Plans() {
 
   const loadPlans = () => {
 
-    fetch(`${API_URL}/api/plans`)
+    return fetch(`${API_URL}/api/plans`)
       .then((response) => response.json())
       .then((data) => {
         setPlans(data);
+        setLoading(false);
       })
       .catch((error) => {
         console.error(error);
+        setLoading(false);
       });
 
   };
 
 
   useEffect(() => {
-    loadPlans();
-  }, []);
+    loadPlans().finally(() => setLoading(false));
+}, []);
 
 
   const handleChange = (event) => {
@@ -164,7 +167,13 @@ function Plans() {
       .includes(search.toLowerCase())
   );
 
-
+if (loading) {
+    return (
+        <div className="loading-screen">
+            <h2>Loading plans...</h2>
+        </div>
+    );
+}
   return (
 
     <div className="customers-page">

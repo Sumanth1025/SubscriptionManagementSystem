@@ -4,6 +4,7 @@ import { Plus, Search, Pencil, Trash2, X } from "lucide-react";
 function Discounts() {
   const API_URL = import.meta.env.VITE_API_URL;
   const [discounts, setDiscounts] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [plans, setPlans] = useState([]);
 
   const [search, setSearch] = useState("");
@@ -37,10 +38,12 @@ function Discounts() {
     setPlans(data);
   };
 
-  useEffect(() => {
-    loadDiscounts();
-    loadPlans();
-  }, []);
+useEffect(() => {
+    Promise.all([
+        loadDiscounts(),
+        loadPlans()
+    ]).finally(() => setLoading(false));
+}, []);
 
   const handleChange = (e) => {
     setForm({
@@ -144,6 +147,13 @@ function Discounts() {
     );
   };
 
+if (loading) {
+    return (
+        <div className="loading-screen">
+            <h2>Loading discounts...</h2>
+        </div>
+    );
+}
   return (
     <div className="page discounts-page">
 

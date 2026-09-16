@@ -5,6 +5,7 @@ function Customers() {
 
   const API_URL = import.meta.env.VITE_API_URL;
   const [customers, setCustomers] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [editingCustomer, setEditingCustomer] = useState(null);
@@ -18,13 +19,15 @@ function Customers() {
 
   const loadCustomers = () => {
 
-    fetch(`${API_URL}/api/customers`)
+    return fetch(`${API_URL}/api/customers`)
       .then((response) => response.json())
       .then((data) => {
         setCustomers(data);
+        setLoading(false);
       })
       .catch((error) => {
         console.error(error);
+        setLoading(false);
       });
 
   };
@@ -158,8 +161,15 @@ function Customers() {
   );
 
 
-  return (
+if (loading) {
+    return (
+        <div className="loading-screen">
+            <h2>Loading customers...</h2>
+        </div>
+    );
+}
 
+return (
     <div className="customers-page">
 
       <div className="page-header">

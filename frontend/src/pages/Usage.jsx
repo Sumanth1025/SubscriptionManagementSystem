@@ -5,6 +5,7 @@ function Usage() {
   const API_URL = import.meta.env.VITE_API_URL;
   const [usage, setUsage] = useState([]);
   const [subscriptions, setSubscriptions] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const [search, setSearch] = useState("");
   const [showForm, setShowForm] = useState(false);
@@ -31,10 +32,12 @@ function Usage() {
     setSubscriptions(data);
   };
 
-  useEffect(() => {
-    loadUsage();
-    loadSubscriptions();
-  }, []);
+useEffect(() => {
+    Promise.all([
+        loadUsage(),
+        loadSubscriptions()
+    ]).finally(() => setLoading(false));
+}, []);
 
   const handleChange = (e) => {
     setForm({
@@ -124,6 +127,13 @@ function Usage() {
     String(item.usage_date).includes(search)
   );
 
+if (loading) {
+    return (
+        <div className="loading-screen">
+            <h2>Loading usage details...</h2>
+        </div>
+    );
+}
   return (
     <div className="page usage-page">
 

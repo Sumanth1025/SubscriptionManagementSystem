@@ -32,19 +32,30 @@ import {
 function Reports() {
 
   const API_URL = import.meta.env.VITE_API_URL;
-  const [reports, setReports] = useState(null);
+  const [reports, setReports] = useState({
+  total_customers: 0,
+  total_plans: 0,
+  active_subscriptions: 0,
+  total_revenue: 0,
+  popular_plans: [],
+  highest_spending_customers: [],
+  monthly_revenue: [],
+  plan_subscription_count: [],
+  payment_method_distribution: [],
+  churn_analysis: []
+});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   /* chart style for each report */
 
-  const [chartTypes, setChartTypes] = useState({
-    revenue: "area",
-    churn: "doughnut",
-    popular: "horizontalBar",
-    spending: "horizontalBar",
-    plans: "bar"
-  });
+const [chartTypes, setChartTypes] = useState({
+  revenue: "area",
+  churn: "doughnut",
+  popular: "horizontalBar",
+  spending: "horizontalBar",
+  paymentMethods: "bar"
+});
 
 
   useEffect(() => {
@@ -92,19 +103,13 @@ function Reports() {
   };
 
 
-  if (loading) {
-
+if (loading) {
     return (
-      <div className="page reports-page">
-
-        <div className="loading-state">
-          Loading reports...
+        <div className="loading-screen">
+            <h2>Loading reports...</h2>
         </div>
-
-      </div>
     );
-
-  }
+}
 
 
   if (error) {
@@ -699,98 +704,106 @@ const renderSpendingChart = () => {
 };
 
   /* ------------------------------------
-     PLAN SUBSCRIPTIONS CHART
-     ------------------------------------ */
+   PAYMENT METHOD DISTRIBUTION CHART
+   ------------------------------------ */
 
-  const renderPlansChart = () => {
+  const renderPaymentMethodChart = () => {
 
-    if (chartTypes.plans === "doughnut") {
+    const paymentData =
+      (reports.payment_method_distribution || []).map((item) => ({
+        ...item,
+        payment_count: Number(item.payment_count) || 0
+    }));
 
-      return (
-        <ResponsiveContainer width="100%" height={330}>
 
-          <PieChart>
-
-            <Pie
-              data={reports.plan_subscription_count}
-              dataKey="subscription_count"
-              nameKey="plan_name"
-              cx="50%"
-              cy="50%"
-              innerRadius={70}
-              outerRadius={110}
-              paddingAngle={3}
-            >
-
-              {reports.plan_subscription_count.map(
-                (entry, index) => (
-
-                  <Cell
-                    key={`plan-${index}`}
-                    fill={
-                      [
-                        "#e50914",
-                        "#b20710",
-                        "#831010",
-                        "#5f0b0b",
-                        "#3a0808"
-                      ][index % 5]
-                    }
-                  />
-
-                )
-              )}
-
-            </Pie>
-
-            <Tooltip contentStyle={tooltipStyle} />
-
-            <Legend />
-
-          </PieChart>
-
-        </ResponsiveContainer>
-      );
-    }
-
+  if (chartTypes.paymentMethods === "doughnut") {
 
     return (
       <ResponsiveContainer width="100%" height={330}>
 
-        <BarChart
-          data={reports.plan_subscription_count}
-        >
+        <PieChart>
 
-          <CartesianGrid
-            strokeDasharray="3 3"
-            stroke="#292929"
-          />
+          <Pie
+            data={paymentData}
+            dataKey="payment_count"
+            nameKey="payment_method"
+            cx="50%"
+            cy="50%"
+            innerRadius={70}
+            outerRadius={110}
+            paddingAngle={3}
+          >
 
-          <XAxis
-            dataKey="plan_name"
-            stroke="#777"
-          />
+            {paymentData.map((entry, index) => (
 
-          <YAxis
-            allowDecimals={false}
-            stroke="#777"
-          />
+              <Cell
+                key={`payment-${index}`}
+                fill={
+                  [
+                    "#e50914",
+                    "#b20710",
+                    "#831010",
+                    "#5f0b0b",
+                    "#3a0808"
+                  ][index % 5]
+                }
+              />
+
+            ))}
+
+          </Pie>
 
           <Tooltip contentStyle={tooltipStyle} />
 
-          <Bar
-            dataKey="subscription_count"
-            name="Subscriptions"
-            fill="#e50914"
-            radius={[6, 6, 0, 0]}
-          />
+          <Legend />
 
-        </BarChart>
+        </PieChart>
 
       </ResponsiveContainer>
     );
-  };
+  }
 
+
+  return (
+    <ResponsiveContainer width="100%" height={330}>
+
+      <BarChart
+        data={paymentData}
+        margin={{
+          left: 20,
+          right: 20
+        }}
+      >
+
+        <CartesianGrid
+          strokeDasharray="3 3"
+          stroke="#292929"
+        />
+
+        <XAxis
+          dataKey="payment_method"
+          stroke="#777"
+        />
+
+        <YAxis
+          allowDecimals={false}
+          stroke="#777"
+        />
+
+        <Tooltip contentStyle={tooltipStyle} />
+
+        <Bar
+          dataKey="payment_count"
+          name="Payments"
+          fill="#e50914"
+          radius={[6, 6, 0, 0]}
+        />
+
+      </BarChart>
+
+    </ResponsiveContainer>
+  );
+};
 
   return (
 
@@ -1122,61 +1135,61 @@ const renderSpendingChart = () => {
         </div>
 
 
-        {/* PLAN-WISE SUBSCRIPTIONS */}
+{/* PAYMENT METHOD DISTRIBUTION */}
 
-        <div className="report-card report-card-large">
+<div className="report-card report-card-large">
 
-          <div className="report-heading">
+  <div className="report-heading">
 
-            <div className="report-heading-icon">
-              <CreditCard size={20} />
-            </div>
+    <div className="report-heading-icon">
+      <CreditCard size={20} />
+    </div>
 
-            <div className="report-heading-content">
+    <div className="report-heading-content">
 
-              <div>
+      <div>
 
-                <h2>Plan-wise Subscription Count</h2>
+        <h2>Payment Method Distribution</h2>
 
-                <p>
-                  Distribution of subscriptions across plans
-                </p>
+        <p>
+          Distribution of payments by payment method
+        </p>
 
-              </div>
+      </div>
 
-              <select
-                className="chart-selector"
-                value={chartTypes.plans}
-                onChange={(e) =>
-                  changeChartType(
-                    "plans",
-                    e.target.value
-                  )
-                }
-              >
+      <select
+        className="chart-selector"
+        value={chartTypes.paymentMethods}
+        onChange={(e) =>
+          changeChartType(
+            "paymentMethods",
+            e.target.value
+          )
+        }
+      >
 
-                <option value="bar">
-                  Vertical Bar
-                </option>
+        <option value="bar">
+          Vertical Bar
+        </option>
 
-                <option value="doughnut">
-                  Doughnut
-                </option>
+        <option value="doughnut">
+          Doughnut
+        </option>
 
-              </select>
+      </select>
 
-            </div>
+    </div>
 
-          </div>
+  </div>
 
 
-          <div className="chart-container">
+  <div className="chart-container">
 
-            {renderPlansChart()}
+    {renderPaymentMethodChart()}
 
-          </div>
+  </div>
 
-        </div>
+</div>
 
 
       </div>
@@ -1185,6 +1198,4 @@ const renderSpendingChart = () => {
 
   );
 }
-
-
 export default Reports;

@@ -1090,21 +1090,17 @@ def reports():
     monthly_revenue = cursor.fetchall()
 
 
-    # 4. plan-wise subscription count
+# 4. payment method distribution
 
     cursor.execute("""
-        select
-            p.plan_id,
-            p.plan_name,
-            count(s.subscription_id) as subscription_count
-        from plans p
-        left join subscriptions s
-            on p.plan_id = s.plan_id
-        group by p.plan_id, p.plan_name
-        order by subscription_count desc
+        select payment_method,
+           count(*) as payment_count
+        from payments
+        group by payment_method
+        order by payment_count desc
     """)
 
-    plan_subscription_count = cursor.fetchall()
+    payment_method_distribution = cursor.fetchall()
 
 
     # 5. churn analysis
@@ -1113,14 +1109,8 @@ def reports():
         select
             status,
             count(*) as subscription_count,
-            round(
-                count(*) * 100.0 /
-                (select count(*) from subscriptions),
-                2
-            ) as percentage
-        from subscriptions
-        group by status
-    """)
+            round(count(*) * 100.0 /(select count(*) from subscriptions),2) as percentage
+            from subscriptions group by status""")
 
     churn_analysis = cursor.fetchall()
 
@@ -1136,8 +1126,6 @@ def reports():
         plan_subscription_count=plan_subscription_count,
         churn_analysis=churn_analysis
     )
-
-
 
 
 
@@ -2088,17 +2076,48 @@ def api_reports():
     total_revenue = cursor.fetchone()["total_revenue"]
 
     cursor.execute("""
-        select p.plan_id,
-               p.plan_name,
-               count(s.subscription_id) as subscription_count
-        from plans p
-        left join subscriptions s
+    SELECT
+        payment_method,
+        COUNT(*) AS payment_count
+    FROM payments
+    GROUP BY payment_method
+    ORDER BY payment_count DESC
+""")
+
+    payment_method_distribution = cursor.fetchall()
+
+# Popular Plans
+
+    cursor.execute("""
+    select
+        p.plan_id,
+        p.plan_name,
+        count(s.subscription_id) as subscription_count
+    from plans p
+    join subscriptions s
         on p.plan_id = s.plan_id
-        group by p.plan_id, p.plan_name
-        order by subscription_count desc
-        limit 5
-    """)
+    group by p.plan_id, p.plan_name
+    order by subscription_count desc
+    limit 5
+""")
+
     popular_plans = cursor.fetchall()
+
+# Plan Subscription Count
+
+    cursor.execute("""
+    select
+        p.plan_id,
+        p.plan_name,
+        count(s.subscription_id) as subscription_count
+    from plans p
+    left join subscriptions s
+        on p.plan_id = s.plan_id
+    group by p.plan_id, p.plan_name
+    order by subscription_count desc
+""")
+
+    plan_subscription_count = cursor.fetchall()
 
     cursor.execute("""
         select c.customer_id,
@@ -2131,17 +2150,6 @@ def api_reports():
     """)
     monthly_revenue = cursor.fetchall()
 
-    cursor.execute("""
-        select p.plan_id,
-               p.plan_name,
-               count(s.subscription_id) as subscription_count
-        from plans p
-        left join subscriptions s
-        on p.plan_id = s.plan_id
-        group by p.plan_id, p.plan_name
-        order by subscription_count desc
-    """)
-    plan_subscription_count = cursor.fetchall()
 
     cursor.execute("""
         select
@@ -2180,8 +2188,9 @@ def api_reports():
         "highest_spending_customers": highest_spending_customers,
         "monthly_revenue": monthly_revenue,
         "plan_subscription_count": plan_subscription_count,
+        "payment_method_distribution": payment_method_distribution,
         "churn_analysis": churn_analysis
-    })
+})
 
 if __name__ == "__main__":
     app.run(debug=True)

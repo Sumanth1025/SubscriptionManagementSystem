@@ -10,6 +10,7 @@ function Subscriptions() {
 
   const API_URL = import.meta.env.VITE_API_URL;
   const [subscriptions, setSubscriptions] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [customers, setCustomers] = useState([]);
   const [plans, setPlans] = useState([]);
 
@@ -32,7 +33,7 @@ function Subscriptions() {
 
   const loadSubscriptions = () => {
 
-    fetch(`${API_URL}/api/subscriptions`)
+    return fetch(`${API_URL}/api/subscriptions`)
       .then((response) => response.json())
       .then((data) => {
         setSubscriptions(data);
@@ -48,7 +49,7 @@ function Subscriptions() {
 
   const loadCustomers = () => {
 
-    fetch(`${API_URL}/api/subscription-customers`)
+    return fetch(`${API_URL}/api/subscription-customers`)
       .then((response) => response.json())
       .then((data) => {
         setCustomers(data);
@@ -64,7 +65,7 @@ function Subscriptions() {
 
   const loadPlans = () => {
 
-    fetch(`${API_URL}/api/subscription-plans`)
+    return fetch(`${API_URL}/api/subscription-plans`)
       .then((response) => response.json())
       .then((data) => {
         setPlans(data);
@@ -78,13 +79,13 @@ function Subscriptions() {
 
   // LOAD ALL DATA
 
-  useEffect(() => {
-
-    loadSubscriptions();
-    loadCustomers();
-    loadPlans();
-
-  }, []);
+useEffect(() => {
+    Promise.all([
+        loadSubscriptions(),
+        loadCustomers(),
+        loadPlans()
+    ]).finally(() => setLoading(false));
+}, []);
 
 
   // HANDLE INPUT
@@ -272,7 +273,13 @@ function Subscriptions() {
 
     });
 
-
+if (loading) {
+    return (
+        <div className="loading-screen">
+            <h2>Loading subscriptions...</h2>
+        </div>
+    );
+}
   return (
 
     <div className="customers-page">
